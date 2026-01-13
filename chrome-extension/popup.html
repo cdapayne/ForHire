@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMSJobs Scraper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LMSJobs Scraper</h1>
+        </header>
+        
+        <div class="controls">
+            <button id="scrapeBtn" class="btn btn-primary">Scrape Jobs</button>
+            <button id="uploadBtn" class="btn btn-primary" style="background-color: #e67e22; display: none;">Upload DB</button>
+            <button id="copyBtn" class="btn btn-secondary" style="display: none;">Copy</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div id="jobList" class="job-list">
+            <!-- Jobs will appear here -->
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

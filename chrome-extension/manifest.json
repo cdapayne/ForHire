@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "LMSJobs Scraper",
+  "version": "1.0",
+  "description": "Scrapes job listings from the current page content.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*", "*://*.indeed.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
