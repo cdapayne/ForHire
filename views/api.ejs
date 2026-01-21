@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JobbyJobJob API - Access real-time job listings data for your applications. Cybersecurity, IT, and tech job data at your fingertips.">
+    <meta name="theme-color" content="#0f172a">
+    <title>JobbyJobJob API - Real-Time Job Data for Developers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#00ff88',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            800: '#0f172a',
+                            900: '#0a1929',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff88 0%, #4ade80 50%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .code-block {
+            background: #1e293b;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .json-key { color: #7dd3fc; }
+        .json-string { color: #86efac; }
+        .json-number { color: #fbbf24; }
+        .json-boolean { color: #f472b6; }
+        .tab-active {
+            border-bottom: 2px solid #00ff88;
+            color: #00ff88;
+        }
+        .glow {
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-100 antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-800/95 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-bolt text-brand-500 text-2xl"></i>
+                    <span class="text-xl font-bold">JobbyJobJob<span class="text-brand-500">API</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                    <a href="#docs" class="text-gray-300 hover:text-white transition">Docs</a>
+                    <a href="/" class="text-gray-300 hover:text-white transition">Job Board</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/login" class="text-gray-300 hover:text-white transition">Sign In</a>
+                    <a href="/register" class="bg-brand-500 text-dark-900 px-4 py-2 rounded-lg font-semibold hover:bg-brand-400 transition">
+                        Get API Key
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800"></div>
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center px-4 py-2 bg-brand-500/10 border border-brand-500/20 rounded-full text-brand-500 text-sm font-medium mb-6">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Trusted by 500+ developers
+                </div>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+                    Power Your Apps with
+                    <span class="gradient-text">Real-Time Job Data</span>
+                </h1>
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Access thousands of cybersecurity and IT job listings through our simple REST API. 
+                    Built for developers who need reliable, up-to-date employment data.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/register" class="inline-flex items-center justify-center bg-brand-500 text-dark-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-400 transition transform hover:scale-105">
+                        <i class="fas fa-key mr-2"></i>
+                        Get Your Free API Key
+                    </a>
+                    <a href="#docs" class="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-700 transition border border-gray-700">
+                        <i class="fas fa-book mr-2"></i>
+                        View Documentation
+                    </a>
+                </div>
+                <p class="text-gray-500 mt-4 text-sm">No credit card required • 100 free API calls</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="py-8 border-y border-gray-800 bg-dark-800/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-brand-500">10K+</div>
+                    <div class="text-gray-400 text-sm">Active Job Listings</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-brand-500">99.9%</div>
+                    <div class="text-gray-400 text-sm">API Uptime</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-brand-500">&lt;100ms</div>
+                    <div class="text-gray-400 text-sm">Avg Response Time</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-brand-500">500+</div>
+                    <div class="text-gray-400 text-sm">Happy Developers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Built for Developers</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Everything you need to integrate job data into your applications
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Lightning Fast</h3>
+                    <p class="text-gray-400">Average response times under 100ms. Our edge-cached infrastructure ensures your users never wait.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-sync text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
+                    <p class="text-gray-400">Jobs are refreshed hourly from multiple sources. Get the freshest listings before your competitors.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-filter text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Powerful Filtering</h3>
+                    <p class="text-gray-400">Filter by location, job type, salary range, company, and more. Get exactly the data you need.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Secure & Reliable</h3>
+                    <p class="text-gray-400">API key authentication, rate limiting, and 99.9% uptime SLA for enterprise customers.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-code text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Simple Integration</h3>
+                    <p class="text-gray-400">RESTful JSON API with SDKs for JavaScript, Python, and more. Get started in minutes.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 hover:border-brand-500/50 transition card-glow">
+                    <div class="w-12 h-12 bg-brand-500/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-brand-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Usage Analytics</h3>
+                    <p class="text-gray-400">Track your API usage, monitor rate limits, and optimize your integration from your dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Code Preview Section -->
+    <section id="docs" class="py-20 px-4 bg-dark-800/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">Try It Now</h2>
+                <p class="text-gray-400 text-lg">See real job data from our API - no signup required</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Code Examples -->
+                <div>
+                    <div class="code-block glow">
+                        <!-- Tabs -->
+                        <div class="flex border-b border-gray-700 bg-gray-800/50">
+                            <button data-tab="curl" id="tab-curl" class="px-4 py-3 text-sm font-medium tab-active">cURL</button>
+                            <button data-tab="javascript" id="tab-javascript" class="px-4 py-3 text-sm font-medium text-gray-400 hover:text-white">JavaScript</button>
+                            <button data-tab="python" id="tab-python" class="px-4 py-3 text-sm font-medium text-gray-400 hover:text-white">Python</button>
+                        </div>
+                        
+                        <!-- Code Content -->
+                        <div id="code-curl" class="code-content">
+                            <pre><code><span class="text-gray-500"># Get job listings with your API key</span>
+curl -X GET "https://api.jobbyjobob.com/v1/jobs?limit=25" \
+  -H "X-API-Key: your_api_key_here" \
+  -H "Content-Type: application/json"
+
+<span class="text-gray-500"># Filter by location</span>
+curl -X GET "https://api.jobbyjobob.com/v1/jobs?location=Remote&limit=10" \
+  -H "X-API-Key: your_api_key_here"</code></pre>
+                        </div>
+                        
+                        <div id="code-javascript" class="code-content hidden">
+                            <pre><code><span class="text-gray-500">// Using fetch API</span>
+<span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> <span class="text-yellow-400">fetch</span>(
+  <span class="json-string">'https://api.jobbyjobob.com/v1/jobs?limit=25'</span>,
+  {
+    <span class="json-key">headers</span>: {
+      <span class="json-string">'X-API-Key'</span>: <span class="json-string">'your_api_key_here'</span>,
+      <span class="json-string">'Content-Type'</span>: <span class="json-string">'application/json'</span>
+    }
+  }
+);
+
+<span class="text-purple-400">const</span> jobs = <span class="text-purple-400">await</span> response.<span class="text-yellow-400">json</span>();
+<span class="text-yellow-400">console</span>.<span class="text-yellow-400">log</span>(jobs.data);</code></pre>
+                        </div>
+                        
+                        <div id="code-python" class="code-content hidden">
+                            <pre><code><span class="text-purple-400">import</span> requests
+
+response = requests.<span class="text-yellow-400">get</span>(
+    <span class="json-string">'https://api.jobbyjobob.com/v1/jobs'</span>,
+    <span class="json-key">headers</span>={
+        <span class="json-string">'X-API-Key'</span>: <span class="json-string">'your_api_key_here'</span>
+    },
+    <span class="json-key">params</span>={
+        <span class="json-string">'limit'</span>: <span class="json-number">25</span>,
+        <span class="json-string">'location'</span>: <span class="json-string">'Remote'</span>
+    }
+)
+
+jobs = response.<span class="text-yellow-400">json</span>()
+<span class="text-yellow-400">print</span>(jobs[<span class="json-string">'data'</span>])</code></pre>
+                        </div>
+                    </div>
+                    
+                    <button id="try-btn" class="mt-4 w-full bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition flex items-center justify-center">
+                        <i class="fas fa-play mr-2"></i>
+                        Try It - Fetch Live Jobs
+                    </button>
+                </div>
+                
+                <!-- Response Preview -->
+                <div>
+                    <div class="code-block glow h-full">
+                        <div class="flex items-center justify-between border-b border-gray-700 bg-gray-800/50 px-4 py-3">
+                            <span class="text-sm font-medium text-gray-400">Response</span>
+                            <span id="response-status" class="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400">Waiting...</span>
+                        </div>
+                        <div id="response-body" class="p-4 overflow-auto max-h-96 text-sm font-mono">
+                            <span class="text-gray-500">// Click "Try It" to see live job data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Start free and scale as you grow. No hidden fees, no surprises.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Free Tier -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Free</h3>
+                        <div class="mt-2">
+                            <span class="text-4xl font-bold">$0</span>
+                            <span class="text-gray-500">/forever</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">Perfect for testing and personal projects</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">100 job rows per month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">1 location filter</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">10 requests per minute</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Basic job data</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Community support</span>
+                        </li>
+                    </ul>
+                    <a href="/register?plan=free" class="block w-full text-center bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition">
+                        Start Free
+                    </a>
+                </div>
+                
+                <!-- Starter Tier -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Starter</h3>
+                        <div class="mt-2">
+                            <span class="text-4xl font-bold">$25</span>
+                            <span class="text-gray-500">/month</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">For growing applications</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">100,000 job rows per month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Up to 50 location filters</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">60 requests per minute</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Full job data fields</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Email support</span>
+                        </li>
+                    </ul>
+                    <a href="/register?plan=starter" class="block w-full text-center bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition">
+                        Get Started
+                    </a>
+                </div>
+                
+                <!-- Pro Tier (Highlighted) -->
+                <div class="bg-gradient-to-b from-brand-500/10 to-transparent border-2 border-brand-500 rounded-2xl p-6 relative glow">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-brand-500 text-dark-900 text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-brand-500">Pro</h3>
+                        <div class="mt-2">
+                            <span class="text-4xl font-bold">$99</span>
+                            <span class="text-gray-500">/month</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">For professional developers</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">500,000 job rows per month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300"><strong class="text-white">Unlimited</strong> location filters</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">200 requests per minute</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Webhooks & real-time updates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Priority support</span>
+                        </li>
+                    </ul>
+                    <a href="/register?plan=pro" class="block w-full text-center bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition">
+                        Get Pro
+                    </a>
+                </div>
+                
+                <!-- Enterprise Tier -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 hover:border-gray-600 transition">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Enterprise</h3>
+                        <div class="mt-2">
+                            <span class="text-4xl font-bold">$199</span>
+                            <span class="text-gray-500">/month</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">For high-volume applications</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">1,000,000 job rows per month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300"><strong class="text-white">Unlimited</strong> location filters</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">1,000 requests per minute</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Bulk export & custom integrations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">Dedicated account manager</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-brand-500 mt-1 mr-2"></i>
+                            <span class="text-sm text-gray-300">99.9% uptime SLA</span>
+                        </li>
+                    </ul>
+                    <a href="/register?plan=enterprise" class="block w-full text-center bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Money Back Guarantee -->
+            <div class="text-center mt-12">
+                <div class="inline-flex items-center px-6 py-3 bg-gray-800/50 rounded-full border border-gray-700">
+                    <i class="fas fa-shield-alt text-brand-500 mr-2"></i>
+                    <span class="text-gray-300">30-day money-back guarantee • Cancel anytime</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 bg-gradient-to-r from-brand-500/10 via-cyan-500/5 to-brand-500/10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-gray-400 text-lg mb-8">
+                Join hundreds of developers building with JobbyJobJob API. Get your free API key in seconds.
+            </p>
+            <a href="/register" class="inline-flex items-center bg-brand-500 text-dark-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-400 transition transform hover:scale-105">
+                <i class="fas fa-key mr-2"></i>
+                Create Free Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-bolt text-brand-500 text-xl"></i>
+                        <span class="text-lg font-bold">JobbyJobJob<span class="text-brand-500">API</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Real-time job data for developers building the future of work.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+                        <li><a href="#docs" class="hover:text-white transition">Documentation</a></li>
+                        <li><a href="/register" class="hover:text-white transition">Get API Key</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/" class="hover:text-white transition">Job Board</a></li>
+                        <li><a href="/resources" class="hover:text-white transition">Resources</a></li>
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition">API Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 JobbyJobJob API. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-brand-500 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-brand-500 transition"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-brand-500 transition"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize event listeners on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching event listeners
+            document.querySelectorAll('[data-tab]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-tab');
+                    showTab(lang);
+                });
+            });
+            
+            // Try It button event listener
+            const tryBtn = document.getElementById('try-btn');
+            if (tryBtn) {
+                tryBtn.addEventListener('click', fetchSampleJobs);
+            }
+        });
+        
+        // Tab switching
+        function showTab(lang) {
+            document.querySelectorAll('.code-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="tab-"]').forEach(el => {
+                el.classList.remove('tab-active', 'text-brand-500');
+                el.classList.add('text-gray-400');
+            });
+            
+            document.getElementById(`code-${lang}`).classList.remove('hidden');
+            const tab = document.getElementById(`tab-${lang}`);
+            tab.classList.add('tab-active');
+            tab.classList.remove('text-gray-400');
+        }
+        
+        // Fetch sample jobs
+        async function fetchSampleJobs() {
+            const btn = document.getElementById('try-btn');
+            const statusEl = document.getElementById('response-status');
+            const bodyEl = document.getElementById('response-body');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Fetching...';
+            statusEl.textContent = 'Loading...';
+            statusEl.className = 'text-xs px-2 py-1 rounded bg-yellow-500/20 text-yellow-400';
+            
+            try {
+                const response = await fetch('/api/v1/jobs/sample?limit=25');
+                const data = await response.json();
+                
+                statusEl.textContent = '200 OK';
+                statusEl.className = 'text-xs px-2 py-1 rounded bg-green-500/20 text-green-400';
+                
+                bodyEl.innerHTML = syntaxHighlight(JSON.stringify(data, null, 2));
+            } catch (error) {
+                statusEl.textContent = 'Error';
+                statusEl.className = 'text-xs px-2 py-1 rounded bg-red-500/20 text-red-400';
+                bodyEl.innerHTML = `<span class="text-red-400">Error: ${error.message}</span>`;
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play mr-2"></i>Try It - Fetch Live Jobs';
+        }
+        
+        // JSON syntax highlighting
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'text-gray-500';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+</body>
+</html>

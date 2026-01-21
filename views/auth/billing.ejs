@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - JobbyJobJob API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 400: '#4ade80', 500: '#00ff88', 600: '#16a34a' },
+                        dark: { 800: '#0f172a', 900: '#0a1929' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-gray-100 antialiased min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-dark-800/95 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/api" class="flex items-center space-x-2">
+                    <i class="fas fa-bolt text-brand-500 text-2xl"></i>
+                    <span class="text-xl font-bold">JobbyJobJob<span class="text-brand-500">API</span></span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="text-gray-300 hover:text-white transition">Dashboard</a>
+                    <a href="/logout" class="text-gray-300 hover:text-white transition">Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-2">Billing & Subscription</h1>
+        <p class="text-gray-400 mb-8">Manage your subscription and payment methods</p>
+
+        <!-- Current Plan -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Current Plan</h2>
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="text-3xl font-bold capitalize"><%= user.plan %></span>
+                    <% if (subscription && subscription.status === 'active') { %>
+                        <span class="ml-3 text-xs px-2 py-1 bg-green-500/10 text-green-400 rounded-full">Active</span>
+                    <% } %>
+                </div>
+                <% if (user.plan !== 'free') { %>
+                    <button id="cancelSubBtn" class="text-red-400 hover:text-red-300 text-sm">
+                        Cancel Subscription
+                    </button>
+                <% } %>
+            </div>
+            <% if (subscription && subscription.currentPeriodEnd) { %>
+                <p class="text-gray-400 text-sm mt-2">
+                    <% if (subscription.cancelAtPeriodEnd) { %>
+                        Cancels on <%= new Date(subscription.currentPeriodEnd).toLocaleDateString() %>
+                    <% } else { %>
+                        Renews on <%= new Date(subscription.currentPeriodEnd).toLocaleDateString() %>
+                    <% } %>
+                </p>
+            <% } %>
+        </div>
+
+        <!-- Usage -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">This Month's Usage</h2>
+            <div class="mb-4">
+                <div class="flex justify-between text-sm mb-1">
+                    <span>Job Rows</span>
+                    <span><%= usage.rowsUsed.toLocaleString() %> / <%= usage.rowLimit.toLocaleString() %></span>
+                </div>
+                <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-brand-500 rounded-full" style="width: <%= Math.min((usage.rowsUsed / usage.rowLimit) * 100, 100) %>%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upgrade Plans -->
+        <% if (user.plan === 'free' || user.plan === 'starter') { %>
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-4">Upgrade Your Plan</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <% if (user.plan === 'free') { %>
+                <div class="border border-gray-600 rounded-lg p-4">
+                    <h3 class="font-semibold">Starter - $25/mo</h3>
+                    <p class="text-gray-400 text-sm mb-4">100K rows, 50 locations</p>
+                    <button data-checkout="starter" data-provider="square" class="checkout-btn w-full bg-gray-700 text-white py-2 rounded-lg hover:bg-gray-600 transition">
+                        <i class="fas fa-credit-card mr-2"></i> Pay with Square
+                    </button>
+                    <button data-checkout="starter" data-provider="paypal" class="checkout-btn w-full mt-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition">
+                        <i class="fab fa-paypal mr-2"></i> Pay with PayPal
+                    </button>
+                </div>
+                <% } %>
+                <div class="border-2 border-brand-500 rounded-lg p-4">
+                    <h3 class="font-semibold text-brand-500">Pro - $99/mo</h3>
+                    <p class="text-gray-400 text-sm mb-4">500K rows, Unlimited locations</p>
+                    <button data-checkout="pro" data-provider="square" class="checkout-btn w-full bg-brand-500 text-dark-900 py-2 rounded-lg hover:bg-brand-400 transition">
+                        <i class="fas fa-credit-card mr-2"></i> Pay with Square
+                    </button>
+                    <button data-checkout="pro" data-provider="paypal" class="checkout-btn w-full mt-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition">
+                        <i class="fab fa-paypal mr-2"></i> Pay with PayPal
+                    </button>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </main>
+
+    <script>
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cancel subscription button
+            const cancelBtn = document.getElementById('cancelSubBtn');
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', cancelSubscription);
+            }
+            
+            // Checkout buttons
+            document.querySelectorAll('.checkout-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const plan = this.getAttribute('data-checkout');
+                    const provider = this.getAttribute('data-provider');
+                    checkout(plan, provider);
+                });
+            });
+        });
+        
+        async function checkout(plan, provider) {
+            try {
+                const response = await fetch('/billing/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ plan, provider })
+                });
+                const data = await response.json();
+                if (data.success && data.checkout.checkoutUrl) {
+                    window.location.href = data.checkout.checkoutUrl;
+                } else {
+                    alert(data.message || 'Checkout failed');
+                }
+            } catch (error) {
+                alert('Error creating checkout');
+            }
+        }
+
+        async function cancelSubscription() {
+            if (!confirm('Are you sure you want to cancel your subscription?')) return;
+            try {
+                const response = await fetch('/billing/cancel', { method: 'POST' });
+                const data = await response.json();
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Failed to cancel');
+                }
+            } catch (error) {
+                alert('Error canceling subscription');
+            }
+        }
+    </script>
+</body>
+</html>

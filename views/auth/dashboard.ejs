@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JobbyJobJob API Dashboard - Manage your API keys and usage">
+    <meta name="theme-color" content="#0f172a">
+    <title>Dashboard - JobbyJobJob API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#4ade80',
+                            500: '#00ff88',
+                            600: '#16a34a',
+                        },
+                        dark: {
+                            800: '#0f172a',
+                            900: '#0a1929',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff88 0%, #4ade80 50%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .api-key-display {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-100 antialiased min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-dark-800/95 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="/api" class="flex items-center space-x-2">
+                        <i class="fas fa-bolt text-brand-500 text-2xl"></i>
+                        <span class="text-xl font-bold">JobbyJobJob<span class="text-brand-500">API</span></span>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/dashboard" class="text-brand-500 font-medium">Dashboard</a>
+                        <a href="/api#docs" class="text-gray-300 hover:text-white transition">Documentation</a>
+                        <a href="/api#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="userMenuToggle" class="flex items-center space-x-2 text-gray-300 hover:text-white transition">
+                            <div class="w-8 h-8 bg-brand-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-brand-500 text-sm"></i>
+                            </div>
+                            <span class="hidden sm:block"><%= typeof user !== 'undefined' ? user.name : 'User' %></span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl">
+                            <a href="/settings" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 transition">
+                                <i class="fas fa-cog mr-2"></i> Settings
+                            </a>
+                            <a href="/billing" class="block px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 transition">
+                                <i class="fas fa-credit-card mr-2"></i> Billing
+                            </a>
+                            <hr class="border-gray-700">
+                            <a href="/logout" class="block px-4 py-3 text-sm text-red-400 hover:bg-gray-700 transition">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">Welcome back, <%= typeof user !== 'undefined' ? user.firstName : 'Developer' %>!</h1>
+            <p class="text-gray-400">Manage your API keys and monitor your usage</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- API Calls Used -->
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">Rows Used This Month</span>
+                    <div class="w-10 h-10 bg-brand-500/10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-database text-brand-500"></i>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-1"><%= typeof usage !== 'undefined' ? usage.rowsUsed.toLocaleString() : '0' %></div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500 text-sm">of <%= typeof usage !== 'undefined' ? usage.rowLimit.toLocaleString() : '100' %></span>
+                    <span class="text-xs px-2 py-1 rounded-full <%= typeof usage !== 'undefined' && (usage.rowsUsed / usage.rowLimit) > 0.8 ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400' %>">
+                        <%= typeof usage !== 'undefined' ? Math.round((usage.rowsUsed / usage.rowLimit) * 100) : 0 %>% used
+                    </span>
+                </div>
+                <!-- Progress bar -->
+                <div class="mt-3 h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-brand-500 rounded-full transition-all" style="width: <%= typeof usage !== 'undefined' ? Math.min((usage.rowsUsed / usage.rowLimit) * 100, 100) : 0 %>%"></div>
+                </div>
+            </div>
+
+            <!-- Current Plan -->
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">Current Plan</span>
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-crown text-purple-400"></i>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-1 capitalize"><%= typeof user !== 'undefined' ? user.plan : 'Free' %></div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-500 text-sm">$<%= typeof user !== 'undefined' ? (user.plan === 'free' ? '0' : user.plan === 'starter' ? '25' : user.plan === 'pro' ? '99' : '199') : '0' %>/month</span>
+                    <a href="/api#pricing" class="text-xs text-brand-500 hover:text-brand-400 transition">Upgrade</a>
+                </div>
+            </div>
+
+            <!-- Location Filters -->
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">Location Filters</span>
+                    <div class="w-10 h-10 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-map-marker-alt text-cyan-400"></i>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-1">
+                    <%= typeof user !== 'undefined' ? (user.plan === 'free' ? '1' : user.plan === 'starter' ? '50' : '∞') : '1' %>
+                </div>
+                <span class="text-gray-500 text-sm">max per request</span>
+            </div>
+
+            <!-- Rate Limit -->
+            <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">Rate Limit</span>
+                    <div class="w-10 h-10 bg-yellow-500/10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tachometer-alt text-yellow-400"></i>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-1">
+                    <%= typeof user !== 'undefined' ? (user.plan === 'free' ? '10' : user.plan === 'starter' ? '60' : user.plan === 'pro' ? '200' : '1000') : '10' %>
+                </div>
+                <span class="text-gray-500 text-sm">requests per minute</span>
+            </div>
+        </div>
+
+        <!-- Location Filters Section -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold">Location Filters</h2>
+                    <p class="text-gray-400 text-sm">Select cities to filter job results in API calls</p>
+                    <% if (typeof user !== 'undefined') { %>
+                        <% const { getPlan } = require('../src/config/plans'); const planDetails = getPlan(user.plan); %>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <span id="locationCount">0</span> / <%= planDetails.locationLimit || '∞' %> locations selected
+                        </p>
+                    <% } %>
+                </div>
+                <button id="addLocationBtn" class="bg-brand-500 text-dark-900 px-4 py-2 rounded-lg font-semibold hover:bg-brand-400 transition flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Add Location
+                </button>
+            </div>
+
+            <!-- Selected Locations -->
+            <div id="selectedLocations" class="space-y-2 mb-4"></div>
+            
+            <!-- Empty State -->
+            <div id="emptyLocations" class="text-center py-8 text-gray-500">
+                <i class="fas fa-map-marker-alt text-4xl mb-3 text-gray-600"></i>
+                <p>No locations selected</p>
+                <p class="text-sm">Add locations to filter your API requests by city</p>
+            </div>
+        </div>
+
+        <!-- API Keys Section -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold">API Keys</h2>
+                    <p class="text-gray-400 text-sm">Manage your API keys for authentication</p>
+                </div>
+                <button id="showCreateKeyBtn" class="bg-brand-500 text-dark-900 px-4 py-2 rounded-lg font-semibold hover:bg-brand-400 transition flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Create New Key
+                </button>
+            </div>
+
+            <!-- API Keys List -->
+            <div class="space-y-4">
+                <% if (typeof apiKeys !== 'undefined' && apiKeys.length > 0) { %>
+                    <% apiKeys.forEach(function(key) { %>
+                        <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <span class="font-semibold"><%= key.name %></span>
+                                        <span class="text-xs px-2 py-1 rounded-full <%= key.isActive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400' %>">
+                                            <%= key.isActive ? 'Active' : 'Inactive' %>
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <code class="api-key-display text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded"><%= key.keyPrefix %>••••••••••••••••</code>
+                                        <button data-copy="<%= key.keyPrefix %>" class="copy-key-btn text-gray-500 hover:text-white transition" title="Copy key">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-gray-500">Last used: <%= key.lastUsedAt ? new Date(key.lastUsedAt).toLocaleDateString() : 'Never' %></span>
+                                    <button data-revoke="<%= key.id %>" class="revoke-key-btn text-red-400 hover:text-red-300 transition p-2" title="Revoke key">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <!-- Empty state / Default key -->
+                    <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <span class="font-semibold">Default Key</span>
+                                    <span class="text-xs px-2 py-1 rounded-full bg-green-500/10 text-green-400">Active</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <code class="api-key-display text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded">jjj_live_••••••••••••••••</code>
+                                    <button data-copy="jjj_live_" class="copy-demo-btn text-gray-500 hover:text-white transition" title="Copy key">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-500">Created: Just now</div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Quick Start Guide -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-4">Quick Start</h2>
+            <p class="text-gray-400 mb-6">Make your first API request in seconds</p>
+
+            <div class="bg-gray-900 rounded-lg overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-2 bg-gray-800/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">cURL</span>
+                    <button id="copyCodeBtn" class="text-gray-500 hover:text-white transition text-sm">
+                        <i class="fas fa-copy mr-1"></i> Copy
+                    </button>
+                </div>
+                <pre class="p-4 overflow-x-auto text-sm"><code id="quickStartCode" class="text-gray-300">curl -X GET "https://api.jobbyjobob.com/v1/jobs?limit=10&location=Remote" \
+  -H "X-API-Key: <span class="text-brand-500">YOUR_API_KEY</span>" \
+  -H "Content-Type: application/json"</code></pre>
+            </div>
+
+            <div class="mt-6 grid md:grid-cols-3 gap-4">
+                <a href="/api#docs" class="bg-gray-900/50 border border-gray-700 rounded-lg p-4 hover:border-brand-500/50 transition block">
+                    <i class="fas fa-book text-brand-500 mb-2"></i>
+                    <h3 class="font-semibold mb-1">Documentation</h3>
+                    <p class="text-gray-400 text-sm">Full API reference and guides</p>
+                </a>
+                <a href="#" class="bg-gray-900/50 border border-gray-700 rounded-lg p-4 hover:border-brand-500/50 transition block">
+                    <i class="fas fa-code text-brand-500 mb-2"></i>
+                    <h3 class="font-semibold mb-1">Code Examples</h3>
+                    <p class="text-gray-400 text-sm">Sample code in multiple languages</p>
+                </a>
+                <a href="#" class="bg-gray-900/50 border border-gray-700 rounded-lg p-4 hover:border-brand-500/50 transition block">
+                    <i class="fas fa-headset text-brand-500 mb-2"></i>
+                    <h3 class="font-semibold mb-1">Support</h3>
+                    <p class="text-gray-400 text-sm">Get help from our team</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Key Modal -->
+    <div id="createKeyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-md">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold">Create New API Key</h3>
+                <button class="close-create-modal text-gray-400 hover:text-white transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="createKeyForm">
+                <div class="mb-6">
+                    <label for="keyName" class="block text-sm font-medium text-gray-300 mb-2">Key Name</label>
+                    <input 
+                        type="text" 
+                        id="keyName" 
+                        name="keyName" 
+                        required
+                        class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                        placeholder="e.g., Production, Development"
+                    >
+                </div>
+                <div class="flex gap-4">
+                    <button type="button" class="close-create-modal flex-1 bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition">
+                        Create Key
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Location Modal -->
+    <div id="addLocationModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-semibold">Add Location</h3>
+                    <p class="text-gray-400 text-sm">Search and select a city</p>
+                </div>
+                <button id="closeLocationModal" class="text-gray-400 hover:text-white transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Search -->
+            <div class="mb-4">
+                <input 
+                    type="text" 
+                    id="locationSearch" 
+                    placeholder="Search cities..."
+                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                >
+            </div>
+            
+            <!-- Cities List -->
+            <div id="citiesList" class="flex-1 overflow-y-auto space-y-1 max-h-96">
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                    <p>Loading cities...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Key Created Modal -->
+    <div id="newKeyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-lg">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-400 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">API Key Created!</h3>
+                <p class="text-gray-400 text-sm">Copy your key now. You won't be able to see it again.</p>
+            </div>
+            <div class="bg-gray-900 rounded-lg p-4 mb-6">
+                <div class="flex items-center justify-between">
+                    <code id="newKeyValue" class="api-key-display text-sm text-brand-500 break-all"></code>
+                    <button id="copyNewKeyBtn" class="ml-4 text-gray-400 hover:text-white transition">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-6">
+                <div class="flex items-start">
+                    <i class="fas fa-exclamation-triangle text-yellow-400 mt-0.5 mr-3"></i>
+                    <p class="text-sm text-yellow-200">Make sure to save this key somewhere safe. For security reasons, we won't show it again.</p>
+                </div>
+            </div>
+            <button id="closeNewKeyBtn" class="w-full bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let availableCities = [];
+        let userLocations = [];
+        
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user locations
+            loadUserLocations();
+            
+            // User menu toggle
+            const userMenuToggle = document.getElementById('userMenuToggle');
+            if (userMenuToggle) {
+                userMenuToggle.addEventListener('click', toggleUserMenu);
+            }
+            
+            // Show create key modal
+            const showCreateKeyBtn = document.getElementById('showCreateKeyBtn');
+            if (showCreateKeyBtn) {
+                showCreateKeyBtn.addEventListener('click', showCreateKeyModal);
+            }
+            
+            // Location management
+            const addLocationBtn = document.getElementById('addLocationBtn');
+            if (addLocationBtn) {
+                addLocationBtn.addEventListener('click', showAddLocationModal);
+            }
+            
+            const closeLocationModal = document.getElementById('closeLocationModal');
+            if (closeLocationModal) {
+                closeLocationModal.addEventListener('click', hideAddLocationModal);
+            }
+            
+            const locationSearch = document.getElementById('locationSearch');
+            if (locationSearch) {
+                locationSearch.addEventListener('input', filterCities);
+            }
+            
+            // Close create key modal
+            document.querySelectorAll('.close-create-modal').forEach(btn => {
+                btn.addEventListener('click', hideCreateKeyModal);
+            });
+            
+            // Copy key buttons
+            document.querySelectorAll('.copy-key-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    copyToClipboard(this.getAttribute('data-copy'));
+                });
+            });
+            
+            // Copy demo key
+            const copyDemoBtn = document.querySelector('.copy-demo-btn');
+            if (copyDemoBtn) {
+                copyDemoBtn.addEventListener('click', function() {
+                    copyToClipboard(this.getAttribute('data-copy'));
+                });
+            }
+            
+            // Revoke key buttons
+            document.querySelectorAll('.revoke-key-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    revokeKey(this.getAttribute('data-revoke'));
+                });
+            });
+            
+            // Copy code button
+            const copyCodeBtn = document.getElementById('copyCodeBtn');
+            if (copyCodeBtn) {
+                copyCodeBtn.addEventListener('click', copyCode);
+            }
+            
+            // Copy new key
+            const copyNewKeyBtn = document.getElementById('copyNewKeyBtn');
+            if (copyNewKeyBtn) {
+                copyNewKeyBtn.addEventListener('click', copyNewKey);
+            }
+            
+            // Close new key modal
+            const closeNewKeyBtn = document.getElementById('closeNewKeyBtn');
+            if (closeNewKeyBtn) {
+                closeNewKeyBtn.addEventListener('click', hideNewKeyModal);
+            }
+        });
+        
+        // User menu toggle
+        function toggleUserMenu() {
+            document.getElementById('userMenu').classList.toggle('hidden');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('userMenu');
+            const button = e.target.closest('button');
+            if (!button || !button.onclick || button.onclick.toString().indexOf('toggleUserMenu') === -1) {
+                if (!e.target.closest('#userMenu')) {
+                    menu.classList.add('hidden');
+                }
+            }
+        });
+
+        // Create key modal
+        function showCreateKeyModal() {
+            document.getElementById('createKeyModal').classList.remove('hidden');
+        }
+
+        function hideCreateKeyModal() {
+            document.getElementById('createKeyModal').classList.add('hidden');
+        }
+
+        // New key modal
+        function hideNewKeyModal() {
+            document.getElementById('newKeyModal').classList.add('hidden');
+            window.location.reload();
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            // Show toast or feedback
+        }
+
+        function copyCode() {
+            const code = document.getElementById('quickStartCode').innerText;
+            navigator.clipboard.writeText(code);
+        }
+
+        function copyNewKey() {
+            const key = document.getElementById('newKeyValue').innerText;
+            navigator.clipboard.writeText(key);
+        }
+
+        // Create key form
+        document.getElementById('createKeyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const keyName = document.getElementById('keyName').value;
+            
+            try {
+                const response = await fetch('/api/keys', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: keyName })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    hideCreateKeyModal();
+                    document.getElementById('newKeyValue').innerText = data.key;
+                    document.getElementById('newKeyModal').classList.remove('hidden');
+                } else {
+                    alert(data.message || 'Failed to create key');
+                }
+            } catch (error) {
+                alert('An error occurred');
+            }
+        });
+
+        // Revoke key
+        async function revokeKey(keyId) {
+            if (!confirm('Are you sure you want to revoke this API key? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/keys/${keyId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to revoke key');
+                }
+            } catch (error) {
+                alert('An error occurred');
+            }
+        }
+        
+        // Location Management Functions
+        async function loadUserLocations() {
+            try {
+                const response = await fetch('/locations/user');
+                const data = await response.json();
+                
+                if (data.success) {
+                    userLocations = data.locations;
+                    renderUserLocations();
+                }
+            } catch (error) {
+                console.error('Failed to load locations:', error);
+            }
+        }
+        
+        function renderUserLocations() {
+            const container = document.getElementById('selectedLocations');
+            const emptyState = document.getElementById('emptyLocations');
+            const countEl = document.getElementById('locationCount');
+            
+            if (countEl) countEl.textContent = userLocations.length;
+            
+            if (userLocations.length === 0) {
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            container.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = userLocations.map(loc => `
+                <div class="bg-gray-900/50 border border-gray-700 rounded-lg p-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-map-marker-alt text-brand-500"></i>
+                        <span>${loc.city_name}</span>
+                        <span class="text-xs text-gray-500">(${loc.geo_id})</span>
+                    </div>
+                    <button onclick="removeLocation(${loc.id})" class="text-red-400 hover:text-red-300 transition">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        async function showAddLocationModal() {
+            document.getElementById('addLocationModal').classList.remove('hidden');
+            
+            if (availableCities.length === 0) {
+                try {
+                    const response = await fetch('/locations/available');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        availableCities = data.cities;
+                        renderCities(availableCities);
+                    }
+                } catch (error) {
+                    console.error('Failed to load cities:', error);
+                }
+            } else {
+                renderCities(availableCities);
+            }
+        }
+        
+        function hideAddLocationModal() {
+            document.getElementById('addLocationModal').classList.add('hidden');
+            document.getElementById('locationSearch').value = '';
+        }
+        
+        function filterCities() {
+            const search = document.getElementById('locationSearch').value.toLowerCase();
+            const filtered = availableCities.filter(city => 
+                city.name.toLowerCase().includes(search)
+            );
+            renderCities(filtered);
+        }
+        
+        function renderCities(cities) {
+            const container = document.getElementById('citiesList');
+            
+            if (cities.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-gray-500">No cities found</div>';
+                return;
+            }
+            
+            container.innerHTML = cities.map(city => `
+                <button 
+                    onclick="addLocation('${city.name.replace(/'/g, "\\'")}', '${city.geoId}', '${city.state}')"
+                    class="w-full text-left px-4 py-3 hover:bg-gray-700 rounded-lg transition flex items-center justify-between group"
+                >
+                    <span>${city.name}</span>
+                    <i class="fas fa-plus text-gray-600 group-hover:text-brand-500 transition"></i>
+                </button>
+            `).join('');
+        }
+        
+        async function addLocation(cityName, geoId, stateCode) {
+            try {
+                const response = await fetch('/locations/user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cityName, geoId, stateCode })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    hideAddLocationModal();
+                    await loadUserLocations();
+                } else {
+                    alert(data.message || 'Failed to add location');
+                }
+            } catch (error) {
+                console.error('Failed to add location:', error);
+                alert('An error occurred');
+            }
+        }
+        
+        async function removeLocation(locationId) {
+            if (!confirm('Remove this location filter?')) return;
+            
+            try {
+                const response = await fetch(`/locations/user/${locationId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    await loadUserLocations();
+                } else {
+                    alert(data.message || 'Failed to remove location');
+                }
+            } catch (error) {
+                console.error('Failed to remove location:', error);
+                alert('An error occurred');
+            }
+        }

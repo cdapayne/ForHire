@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Create your JobbyJobJob API account and get your API key"
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Sign Up - JobbyJobJob API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                400: "#4ade80",
+                500: "#00ff88",
+                600: "#16a34a",
+              },
+              dark: {
+                800: "#0f172a",
+                900: "#0a1929",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .gradient-text {
+        background: linear-gradient(
+          135deg,
+          #00ff88 0%,
+          #4ade80 50%,
+          #22d3ee 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .plan-card {
+        transition: all 0.2s ease;
+      }
+      .plan-card.selected {
+        border-color: #00ff88;
+        background: rgba(0, 255, 136, 0.05);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-dark-900 text-gray-100 antialiased min-h-screen flex flex-col"
+  >
+    <!-- Navigation -->
+    <nav class="bg-dark-800/95 border-b border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <a href="/api" class="flex items-center space-x-2">
+            <i class="fas fa-bolt text-brand-500 text-2xl"></i>
+            <span class="text-xl font-bold"
+              >JobbyJobJob<span class="text-brand-500">API</span></span
+            >
+          </a>
+          <div class="flex items-center space-x-4">
+            <a
+              href="/api"
+              class="text-gray-300 hover:text-white transition text-sm"
+            >
+              <i class="fas fa-arrow-left mr-1"></i> Back to API
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 py-12">
+      <div class="w-full max-w-2xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl font-bold mb-2">Create your account</h1>
+          <p class="text-gray-400">
+            Get started with your free API key in seconds
+          </p>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-8">
+          <form id="registerForm" class="space-y-6">
+            <!-- Step Indicator -->
+            <div class="flex items-center justify-center mb-8">
+              <div class="flex items-center">
+                <div
+                  id="step1-indicator"
+                  class="w-8 h-8 rounded-full bg-brand-500 text-dark-900 flex items-center justify-center font-semibold text-sm"
+                >
+                  1
+                </div>
+                <span class="ml-2 text-sm font-medium">Account</span>
+              </div>
+              <div class="w-12 h-0.5 bg-gray-700 mx-4"></div>
+              <div class="flex items-center">
+                <div
+                  id="step2-indicator"
+                  class="w-8 h-8 rounded-full bg-gray-700 text-gray-400 flex items-center justify-center font-semibold text-sm"
+                >
+                  2
+                </div>
+                <span class="ml-2 text-sm text-gray-500">Plan</span>
+              </div>
+            </div>
+
+            <!-- Step 1: Account Details -->
+            <div id="step1" class="space-y-6">
+              <!-- Name -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    for="firstName"
+                    class="block text-sm font-medium text-gray-300 mb-2"
+                    >First name</label
+                  >
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    required
+                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                    placeholder="John"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="lastName"
+                    class="block text-sm font-medium text-gray-300 mb-2"
+                    >Last name</label
+                  >
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    required
+                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                    placeholder="Doe"
+                  />
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Email address</label
+                >
+                <div class="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 pl-11 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                    placeholder="you@example.com"
+                  />
+                  <i
+                    class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+                  ></i>
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div>
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-300 mb-2"
+                  >Password</label
+                >
+                <div class="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 pl-11 pr-11 text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition"
+                    placeholder="••••••••"
+                  />
+                  <i
+                    class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+                  ></i>
+                  <button
+                    type="button"
+                    id="passwordToggleBtn"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                  >
+                    <i id="passwordToggle" class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">
+                  Must be at least 8 characters
+                </p>
+              </div>
+
+              <!-- Next Button -->
+              <button
+                type="button"
+                id="continueBtn"
+                class="w-full bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition"
+              >
+                Continue <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+
+            <!-- Step 2: Plan Selection -->
+            <div id="step2" class="space-y-6 hidden">
+              <div>
+                <h3 class="text-lg font-semibold mb-4">Choose your plan</h3>
+                <p class="text-gray-400 text-sm mb-6">
+                  You can always upgrade or downgrade later
+                </p>
+
+                <div class="grid gap-4">
+                  <!-- Free Plan -->
+                  <label
+                    class="plan-card cursor-pointer border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition block"
+                    data-plan="free"
+                  >
+                    <div class="flex items-start">
+                      <input
+                        type="radio"
+                        name="plan"
+                        value="free"
+                        class="mt-1 text-brand-500 focus:ring-brand-500"
+                        checked
+                      />
+                      <div class="ml-4 flex-1">
+                        <div class="flex justify-between items-start">
+                          <div>
+                            <h4 class="font-semibold">Free</h4>
+                            <p class="text-sm text-gray-400">
+                              Perfect for testing
+                            </p>
+                          </div>
+                          <span class="text-xl font-bold"
+                            >$0<span class="text-sm font-normal text-gray-500"
+                              >/mo</span
+                            ></span
+                          >
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >100 rows/mo</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >1 location</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >10 req/min</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+
+                  <!-- Starter Plan -->
+                  <label
+                    class="plan-card cursor-pointer border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition block"
+                    data-plan="starter"
+                  >
+                    <div class="flex items-start">
+                      <input
+                        type="radio"
+                        name="plan"
+                        value="starter"
+                        class="mt-1 text-brand-500 focus:ring-brand-500"
+                      />
+                      <div class="ml-4 flex-1">
+                        <div class="flex justify-between items-start">
+                          <div>
+                            <h4 class="font-semibold">Starter</h4>
+                            <p class="text-sm text-gray-400">
+                              For growing apps
+                            </p>
+                          </div>
+                          <span class="text-xl font-bold"
+                            >$25<span class="text-sm font-normal text-gray-500"
+                              >/mo</span
+                            ></span
+                          >
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >100K rows/mo</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >50 locations</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >60 req/min</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+
+                  <!-- Pro Plan -->
+                  <label
+                    class="plan-card cursor-pointer border-2 border-brand-500/50 rounded-xl p-4 bg-brand-500/5 transition block relative"
+                    data-plan="pro"
+                  >
+                    <span
+                      class="absolute -top-2 right-4 bg-brand-500 text-dark-900 text-xs font-bold px-2 py-0.5 rounded"
+                      >POPULAR</span
+                    >
+                    <div class="flex items-start">
+                      <input
+                        type="radio"
+                        name="plan"
+                        value="pro"
+                        class="mt-1 text-brand-500 focus:ring-brand-500"
+                      />
+                      <div class="ml-4 flex-1">
+                        <div class="flex justify-between items-start">
+                          <div>
+                            <h4 class="font-semibold text-brand-500">Pro</h4>
+                            <p class="text-sm text-gray-400">
+                              For professionals
+                            </p>
+                          </div>
+                          <span class="text-xl font-bold"
+                            >$99<span class="text-sm font-normal text-gray-500"
+                              >/mo</span
+                            ></span
+                          >
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >500K rows/mo</span
+                          >
+                          <span
+                            class="text-xs bg-brand-500/20 text-brand-500 px-2 py-1 rounded"
+                            >Unlimited locations</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >200 req/min</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+
+                  <!-- Enterprise Plan -->
+                  <label
+                    class="plan-card cursor-pointer border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition block"
+                    data-plan="enterprise"
+                  >
+                    <div class="flex items-start">
+                      <input
+                        type="radio"
+                        name="plan"
+                        value="enterprise"
+                        class="mt-1 text-brand-500 focus:ring-brand-500"
+                      />
+                      <div class="ml-4 flex-1">
+                        <div class="flex justify-between items-start">
+                          <div>
+                            <h4 class="font-semibold">Enterprise</h4>
+                            <p class="text-sm text-gray-400">High volume</p>
+                          </div>
+                          <span class="text-xl font-bold"
+                            >$199<span class="text-sm font-normal text-gray-500"
+                              >/mo</span
+                            ></span
+                          >
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >1M rows/mo</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >Unlimited locations</span
+                          >
+                          <span class="text-xs bg-gray-700 px-2 py-1 rounded"
+                            >1000 req/min</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Terms -->
+              <div class="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="terms"
+                  required
+                  class="mt-1 w-4 h-4 bg-gray-900 border-gray-700 rounded text-brand-500 focus:ring-brand-500 focus:ring-offset-gray-900"
+                />
+                <label for="terms" class="ml-2 text-sm text-gray-400">
+                  I agree to the
+                  <a href="#" class="text-brand-500 hover:underline"
+                    >Terms of Service</a
+                  >
+                  and
+                  <a href="#" class="text-brand-500 hover:underline"
+                    >Privacy Policy</a
+                  >
+                </label>
+              </div>
+
+              <!-- Error Message -->
+              <div
+                id="errorMessage"
+                class="hidden bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-400 text-sm"
+              >
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span id="errorText">An error occurred</span>
+              </div>
+
+              <!-- Buttons -->
+              <div class="flex gap-4">
+                <button
+                  type="button"
+                  id="backBtn"
+                  class="flex-1 bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition"
+                >
+                  <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+                <button
+                  type="submit"
+                  class="flex-1 bg-brand-500 text-dark-900 py-3 rounded-lg font-semibold hover:bg-brand-400 transition flex items-center justify-center"
+                >
+                  <span id="btnText">Create Account</span>
+                  <i
+                    id="btnSpinner"
+                    class="fas fa-spinner fa-spin ml-2 hidden"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Divider (Step 1 only) -->
+          <div id="socialLogin" class="mt-6">
+            <div class="relative mb-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-700"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-gray-800/50 text-gray-500"
+                  >or sign up with</span
+                >
+              </div>
+            </div>
+
+            <!-- Social Signup -->
+            <div class="grid grid-cols-2 gap-4">
+              <button
+                class="flex items-center justify-center bg-gray-900/50 border border-gray-700 rounded-lg py-3 hover:bg-gray-700 transition"
+              >
+                <i class="fab fa-google mr-2"></i>
+                Google
+              </button>
+              <button
+                class="flex items-center justify-center bg-gray-900/50 border border-gray-700 rounded-lg py-3 hover:bg-gray-700 transition"
+              >
+                <i class="fab fa-github mr-2"></i>
+                GitHub
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign In Link -->
+        <p class="text-center mt-6 text-gray-400">
+          Already have an account?
+          <a
+            href="/login"
+            class="text-brand-500 hover:text-brand-400 font-semibold transition"
+            >Sign in</a
+          >
+        </p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 px-4 border-t border-gray-800">
+      <div
+        class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500"
+      >
+        <p>&copy; 2026 JobbyJobJob API. All rights reserved.</p>
+        <div class="flex space-x-4 mt-2 sm:mt-0">
+          <a href="#" class="hover:text-gray-300 transition">Privacy</a>
+          <a href="#" class="hover:text-gray-300 transition">Terms</a>
+          <a href="#" class="hover:text-gray-300 transition">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Check URL for preselected plan
+      const urlParams = new URLSearchParams(window.location.search);
+      const preselectedPlan = urlParams.get("plan");
+      if (preselectedPlan) {
+        const planInput = document.querySelector(
+          `input[value="${preselectedPlan}"]`,
+        );
+        if (planInput) {
+          planInput.checked = true;
+          updatePlanCards();
+        }
+      }
+
+      // Toggle password visibility
+      function togglePassword() {
+        const input = document.getElementById("password");
+        const icon = document.getElementById("passwordToggle");
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      // Step navigation
+      function goToStep2() {
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!firstName || !lastName || !email || !password) {
+          alert("Please fill in all fields");
+          return;
+        }
+
+        if (password.length < 8) {
+          alert("Password must be at least 8 characters");
+          return;
+        }
+
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+        document.getElementById("socialLogin").classList.add("hidden");
+
+        document
+          .getElementById("step1-indicator")
+          .classList.remove("bg-brand-500", "text-dark-900");
+        document
+          .getElementById("step1-indicator")
+          .classList.add("bg-green-500", "text-white");
+        document.getElementById("step1-indicator").innerHTML =
+          '<i class="fas fa-check text-xs"></i>';
+
+        document
+          .getElementById("step2-indicator")
+          .classList.remove("bg-gray-700", "text-gray-400");
+        document
+          .getElementById("step2-indicator")
+          .classList.add("bg-brand-500", "text-dark-900");
+      }
+
+      function goToStep1() {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step1").classList.remove("hidden");
+        document.getElementById("socialLogin").classList.remove("hidden");
+
+        document
+          .getElementById("step1-indicator")
+          .classList.add("bg-brand-500", "text-dark-900");
+        document
+          .getElementById("step1-indicator")
+          .classList.remove("bg-green-500", "text-white");
+        document.getElementById("step1-indicator").innerHTML = "1";
+
+        document
+          .getElementById("step2-indicator")
+          .classList.add("bg-gray-700", "text-gray-400");
+        document
+          .getElementById("step2-indicator")
+          .classList.remove("bg-brand-500", "text-dark-900");
+      }
+
+      // Update plan card styling
+      function updatePlanCards() {
+        document.querySelectorAll(".plan-card").forEach((card) => {
+          const input = card.querySelector('input[type="radio"]');
+          if (input.checked) {
+            card.classList.add("selected");
+          } else {
+            card.classList.remove("selected");
+          }
+        });
+      }
+
+      // Plan selection
+      document.querySelectorAll('input[name="plan"]').forEach((input) => {
+        input.addEventListener("change", updatePlanCards);
+      });
+      
+      // Add event listeners for buttons
+      const passwordToggleBtn = document.getElementById('passwordToggleBtn');
+      if (passwordToggleBtn) {
+        passwordToggleBtn.addEventListener('click', togglePassword);
+      }
+      
+      const continueBtn = document.getElementById('continueBtn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', goToStep2);
+      }
+      
+      const backBtn = document.getElementById('backBtn');
+      if (backBtn) {
+        backBtn.addEventListener('click', goToStep1);
+      }
+
+      // Form submission
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const terms = document.getElementById("terms");
+          if (!terms.checked) {
+            alert("Please agree to the Terms of Service and Privacy Policy");
+            return;
+          }
+
+          const btn = this.querySelector('button[type="submit"]');
+          const btnText = document.getElementById("btnText");
+          const btnSpinner = document.getElementById("btnSpinner");
+          const errorMessage = document.getElementById("errorMessage");
+
+          // Show loading state
+          btn.disabled = true;
+          btnText.textContent = "Creating account...";
+          btnSpinner.classList.remove("hidden");
+          errorMessage.classList.add("hidden");
+
+          const formData = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            plan: document.querySelector('input[name="plan"]:checked').value,
+          };
+
+          try {
+            const response = await fetch("/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Redirect to dashboard
+              window.location.href = "/dashboard";
+            } else {
+              // Show error
+              document.getElementById("errorText").textContent =
+                data.message || "Registration failed";
+              errorMessage.classList.remove("hidden");
+            }
+          } catch (error) {
+            document.getElementById("errorText").textContent =
+              "An error occurred. Please try again.";
+            errorMessage.classList.remove("hidden");
+          }
+
+          // Reset button
+          btn.disabled = false;
+          btnText.textContent = "Create Account";
+          btnSpinner.classList.add("hidden");
+        });
+    </script>
+  </body>
+</html>
