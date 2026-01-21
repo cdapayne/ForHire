@@ -22,9 +22,10 @@ const addJobsToSystem = async (newJobs) => {
     if (!newJobs || newJobs.length === 0) return 0;
 
     let addedCount = 0;
-    const connection = await pool.getConnection();
+    let connection;
 
     try {
+        connection = await pool.getConnection();
         const now = new Date();
         const expiresAt = new Date(now.setMonth(now.getMonth() + 1));
         const addedAt = new Date();
@@ -35,8 +36,8 @@ const addJobsToSystem = async (newJobs) => {
             if (rows.length === 0) {
                 const query = `
                     INSERT INTO jobs 
-                    (id, title, company, location, type, salary, posted_date, description, url, source, added_at, expires_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    (id, title, company, location, type, salary, posted_date, description, url, source, easy_apply, added_at, expires_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 `;
                 
                 await connection.execute(query, [
@@ -50,6 +51,7 @@ const addJobsToSystem = async (newJobs) => {
                     job.description || '',
                     job.url || '',
                     job.source || 'External',
+                    job.easyApply || false,
                     addedAt,
                     expiresAt
                 ]);
@@ -59,8 +61,14 @@ const addJobsToSystem = async (newJobs) => {
         console.log(`✅ Added ${addedCount} new unique jobs to the database.`);
     } catch (err) {
         console.error('Error adding jobs to DB:', err);
+        console.error('Database connection details:', {
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            user: process.env.DB_USER
+        });
+        throw err;
     } finally {
-        connection.release();
+        if (connection) connection.release();
     }
     return addedCount;
 };

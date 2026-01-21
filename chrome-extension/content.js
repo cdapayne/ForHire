@@ -27,45 +27,229 @@ function scrapeJobsFromPage() {
 
 function scrapeLinkedIn() {
     const jobs = [];
-    const jobCards = document.querySelectorAll('.job-card-container');
+    
+    // LinkedIn has multiple possible selectors depending on view/layout
+    const jobCardSelectors = [
+        '.job-card-container',                    // Classic view
+        '.jobs-search-results__list-item',        // Updated search results
+        '.scaffold-layout__list-item',            // Newer layout
+        'li.jobs-search-results__list-item',      // More specific
+        'div[data-job-id]'                         // Direct job card with ID
+    ];
+    
+    let jobCards = [];
+    for (const selector of jobCardSelectors) {
+        jobCards = document.querySelectorAll(selector);
+        if (jobCards.length > 0) {
+            console.warn(`LinkedIn: Found ${jobCards.length} jobs using selector: ${selector}`);
+            break;
+        }
+    }
+
+    if (jobCards.length === 0) {
+        console.warn("LinkedIn: No job cards found with any known selectors");
+        return jobs;
+    }
 
     jobCards.forEach(card => {
         try {
-            // 1. Job Title & Link
-            const titleElement = card.querySelector('.job-card-list__title--link, .job-card-list__title');
+            // 1. Job Title & Link - Multiple possible selectors
+            const titleSelectors = [
+                '.job-card-list__title--link',
+                '.job-card-list__title',
+                '.job-card-container__link',
+                '.disabled-ember-anchor',
+                'a.job-card-container__link',
+                '.base-card__full-link',
+                '.base-search-card__title',
+                'a[data-tracking-control-name*="job"]'
+            ];
+            
             let title = "Unknown Title";
             let link = "#";
+            let titleElement = null;
+            
+            for (const selector of titleSelectors) {
+                titleElement = card.querySelector(selector);
+                if (titleElement) break;
+            }
             
             if (titleElement) {
                 title = titleElement.innerText.trim();
                 if (titleElement.tagName.toLowerCase() === 'a') {
                     link = titleElement.href;
+                } else {
+                    // Sometimes the link is on a parent or sibling
+                    const linkAnchor = card.querySelector('a[href*="/jobs/view/"]');
+                    if (linkAnchor) link = linkAnchor.href;
                 }
             }
 
-            // 2. Company Name
-            const companyElement = card.querySelector('.artdeco-entity-lockup__subtitle');
+            // 2. Company Name - Multiple possible selectors
+            const companySelectors = [
+                '.artdeco-entity-lockup__subtitle',
+                '.job-card-container__company-name',
+                '.base-search-card__subtitle',
+                'a.job-card-container__company-link',
+                '.job-card-container__primary-description'
+            ];
+            
             let company = "Unknown Company";
+            let companyElement = null;
+            
+            for (const selector of companySelectors) {
+                companyElement = card.querySelector(selector);
+                if (companyElement) break;
+            }
+            
             if (companyElement) {
                 company = companyElement.innerText.trim();
             }
 
-            // 3. Location
-            const locationElement = card.querySelector('.job-card-container__metadata-wrapper li, .job-card-container__metadata-item');
+            // 3. Location - Multiple possible selectors
+            const locationSelectors = [
+                '.job-card-container__metadata-wrapper li',
+                '.job-card-container__metadata-item',
+                '.base-search-card__metadata',
+                '.job-search-card__location'
+            ];
+            
             let location = "Remote/Unknown";
+            let locationElement = null;
+            
+            for (const selector of locationSelectors) {
+                locationElement = card.querySelector(selector);
+                if (locationElement) break;
+            }
+            
             if (locationElement) {
                 location = locationElement.innerText.trim();
             }
 
             // 4. Logo Image
-            const imgElement = card.querySelector('.job-card-list__logo img, .ivm-view-attr__img--centered');
+            const imgElement = card.querySelector('.job-card-list__logo img, .ivm-view-attr__img--centered, img.artdeco-entity-image, .job-card-square-logo img');
             let image = "";
             if (imgElement) {
                 image = imgElement.src;
             }
 
-            // 5. Job ID (from data attribute)
-            const jobId = card.getAttribute('data-job-id') || 'li-' + Math.random().toString(36).substr(2, 9);
+            // 5. Salary Range - Look for spans with dir="ltr" containing salary info
+            let salary = "Not listed";
+            
+            // First, try the metadata section with class artdeco-entity-lockup__metadata
+            const metadataSection = card.querySelector('.artdeco-entity-lockup__metadata');
+            if (metadataSection) {
+                const metadataText = metadataSection.innerText.trim();
+                console.warn(`LinkedIn: Checking metadata section: "${metadataText}"`);
+                
+                // Look for salary pattern in this section
+                const salaryMatch = metadataText.match(/\$\d+[.,]?\d*[KkMm]?(\/yr)?(\s*-\s*\$\d+[.,]?\d*[KkMm]?(\/yr)?)?/);
+                if (salaryMatch) {
+                    salary = salaryMatch[0];
+                    console.warn(`LinkedIn: Found salary in metadata section: ${salary}`);
+                }
+            }
+            
+            // If not found, check all spans with dir="ltr" for salary patterns
+            if (salary === "Not listed") {
+                const allSpans = card.querySelectorAll('span[dir="ltr"]');
+                console.warn(`LinkedIn: Checking ${allSpans.length} spans for salary`);
+                
+                for (const span of allSpans) {
+                    const text = span.innerText.trim();
+                    // Look for salary patterns like "$101K/yr - $120.4K/yr" or "$100,000 - $150,000"
+                    if (text.match(/\$\d+[.,]?\d*[KkMm]?(\/yr)?(\s*-\s*\$\d+[.,]?\d*[KkMm]?(\/yr)?)?/)) {
+                        salary = text;
+                        console.warn(`LinkedIn: Found salary in span: ${salary}`);
+                        break;
+                    }
+                }
+            }
+            
+            // If not found, check metadata list items
+            if (salary === "Not listed") {
+                const metadataItems = card.querySelectorAll('.job-card-container__metadata-wrapper li, .artdeco-entity-lockup__metadata li');
+                console.warn(`LinkedIn: Checking ${metadataItems.length} metadata items for salary`);
+                
+                for (const item of metadataItems) {
+                    const text = item.innerText.trim();
+                    if (text.match(/\$\d+[.,]?\d*[KkMm]?(\/yr)?(\s*-\s*\$\d+[.,]?\d*[KkMm]?(\/yr)?)?/)) {
+                        salary = text;
+                        console.warn(`LinkedIn: Found salary in metadata item: ${salary}`);
+                        break;
+                    }
+                }
+            }
+            
+            // Clean salary text - extract just the salary part, remove benefits info
+            if (salary !== "Not listed") {
+                // Extract just the salary part before any · or other separators
+                const salaryMatch = salary.match(/\$\d+[.,]?\d*[KkMm]?(\/yr)?(\s*-\s*\$\d+[.,]?\d*[KkMm]?(\/yr)?)?/);
+                if (salaryMatch) {
+                    salary = salaryMatch[0];
+                    console.warn(`LinkedIn: Cleaned salary: ${salary}`);
+                }
+            } else {
+                console.warn('LinkedIn: No salary found for this job');
+            }
+
+            // 6. Easy Apply - Look for spans with dir="ltr" containing "Easy Apply"
+            let isEasyApply = false;
+            
+            console.warn('LinkedIn: Checking for Easy Apply...');
+            
+            // Check all spans with dir="ltr" for "Easy Apply" text
+            const footerSpans = card.querySelectorAll('.job-card-container__footer-wrapper span[dir="ltr"], .job-card-list__footer-wrapper span[dir="ltr"]');
+            console.warn(`LinkedIn: Found ${footerSpans.length} footer spans to check`);
+            
+            for (const span of footerSpans) {
+                const text = span.innerText.trim().toLowerCase();
+                console.warn(`LinkedIn: Footer span text: "${text}"`);
+                if (text === 'easy apply') {
+                    isEasyApply = true;
+                    console.warn('LinkedIn: ✓ Found Easy Apply badge');
+                    break;
+                }
+            }
+            
+            // Fallback: check for Easy Apply in footer items
+            if (!isEasyApply) {
+                const footerItems = card.querySelectorAll('.job-card-container__footer-wrapper li, .job-card-list__footer-wrapper li');
+                console.warn(`LinkedIn: Checking ${footerItems.length} footer items`);
+                
+                for (const item of footerItems) {
+                    const text = item.innerText?.toLowerCase() || '';
+                    if (text.includes('easy apply')) {
+                        isEasyApply = true;
+                        console.warn('LinkedIn: ✓ Found Easy Apply in footer item');
+                        break;
+                    }
+                }
+            }
+            
+            // Final fallback: check entire card for Easy Apply text
+            if (!isEasyApply) {
+                const cardText = card.innerText.toLowerCase();
+                if (cardText.includes('easy apply')) {
+                    isEasyApply = true;
+                    console.warn('LinkedIn: ✓ Found Easy Apply in card text (fallback)');
+                }
+            }
+            
+            if (!isEasyApply) {
+                console.warn('LinkedIn: ✗ No Easy Apply found for this job');
+            }
+
+            // 7. Job ID (from data attribute)
+            let jobId = card.getAttribute('data-job-id') || 
+                        card.getAttribute('data-occludable-job-id') ||
+                        card.querySelector('[data-job-id]')?.getAttribute('data-job-id');
+            
+            if (!jobId) {
+                // Try to extract from URL
+                const match = link.match(/\/jobs\/view\/(\d+)/);
+                jobId = match ? match[1] : 'li-' + Math.random().toString(36).substr(2, 9);
+            }
 
             if (title !== "Unknown Title") {
                 jobs.push({
@@ -73,6 +257,8 @@ function scrapeLinkedIn() {
                     title,
                     company,
                     location,
+                    salary,
+                    easyApply: isEasyApply,
                     url: link,
                     image,
                     source: 'LinkedIn'
@@ -83,6 +269,7 @@ function scrapeLinkedIn() {
         }
     });
 
+    console.warn(`LinkedIn: Successfully scraped ${jobs.length} jobs`);
     return jobs;
 }
 

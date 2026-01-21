@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Find your next cybersecurity and IT job. Browse live opportunities from top sources.">
+    <meta name="theme-color" content="#0d2538">
     <title><%= title %></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
@@ -10,11 +12,10 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <h1 class="logo"><i class="fas fa-shield-alt"></i> LMSJobs</h1>
+            <h1 class="logo"><i class="fas fa-shield-alt"></i> MD Technical Job Board</h1>
             <ul class="nav-links">
                 <li><a href="/">Jobs</a></li>
-                <li><a href="#">Resources</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="/resources">Resources</a></li>
             </ul>
         </div>
     </nav>
@@ -41,31 +42,99 @@
     <main class="container main-content">
         <div class="filters">
             <h3>Filters</h3>
+            
             <div class="filter-group">
-                <label><input type="checkbox" checked> Full-time</label>
-                <label><input type="checkbox" checked> Contract</label>
-                <label><input type="checkbox"> Remote</label>
+                <label><strong>Company</strong></label>
+                <select id="companyFilter" class="filter-select">
+                    <option value="">All Companies</option>
+                </select>
             </div>
-            <!-- More filters can be added here -->
+
+            <div class="filter-group">
+                <label><strong>Location</strong></label>
+                <select id="locationFilter" class="filter-select">
+                    <option value="">All Locations</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label><strong>Job Type</strong></label>
+                <select id="typeFilter" class="filter-select">
+                    <option value="">All Types</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label><strong>Salary Range</strong></label>
+                <select id="salaryFilter" class="filter-select">
+                    <option value="">All Salaries</option>
+                    <option value="0-50000">$0 - $50,000</option>
+                    <option value="50000-75000">$50,000 - $75,000</option>
+                    <option value="75000-100000">$75,000 - $100,000</option>
+                    <option value="100000-150000">$100,000 - $150,000</option>
+                    <option value="150000-999999">$150,000+</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label><strong>Source</strong></label>
+                <select id="sourceFilter" class="filter-select">
+                    <option value="">All Sources</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="Indeed">Indeed</option>
+                    <option value="We Work Remotely">We Work Remotely</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>
+                    <input type="checkbox" id="easyApplyFilter">
+                    <strong>Easy Apply Only</strong>
+                </label>
+            </div>
+
+            <button id="clearFilters" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Clear Filters</button>
         </div>
 
         <div class="job-listings">
             <div class="results-header">
-                <h3><%= jobs.length %> Jobs Found</h3>
+                <h3><span id="jobCount"><%= jobs.length %></span> Jobs Found</h3>
                 <div class="sort-by">
                     Sort by: 
-                    <select>
-                        <option>Most Recent</option>
-                        <option>Salary (High-Low)</option>
+                    <select id="sortSelect">
+                        <option value="recent">Most Recent</option>
+                        <option value="salary-high">Salary (High-Low)</option>
+                        <option value="salary-low">Salary (Low-High)</option>
+                        <option value="company">Company (A-Z)</option>
+                        <option value="title">Job Title (A-Z)</option>
                     </select>
                 </div>
             </div>
 
             <% if (jobs.length > 0) { %>
                 <% jobs.forEach(job => { %>
-                    <div class="job-card">
+                    <div class="job-card" data-company="<%= job.company %>" data-location="<%= job.location %>" data-type="<%= job.type %>" data-salary="<%= job.salary %>" data-source="<%= job.source || 'Unknown' %>" data-easy-apply="<%= job.easy_apply ? 'true' : 'false' %>">
                         <div class="job-header">
-                            <h4><%= job.title %></h4>
+                            <div class="job-header-left">
+                                <h4><%= job.title %></h4>
+                                <div class="badge-container">
+                                    <% if (job.source) { %>
+                                        <span class="source-badge source-<%= (job.source || '').toLowerCase().replace(/\s+/g, '-') %>">
+                                            <i class="fas fa-link"></i> <%= job.source %>
+                                        </span>
+                                    <% } %>
+                                    <% if (job.easy_apply) { %>
+                                        <span class="easy-apply-badge">
+                                            <i class="fas fa-bolt"></i> Easy Apply
+                                        </span>
+                                    <% } %>
+                                </div>
+                            </div>
                             <span class="salary"><%= job.salary %></span>
                         </div>
                         <div class="job-meta">
@@ -74,7 +143,9 @@
                             <span><i class="fas fa-clock"></i> <%= job.type %></span>
                             <span><i class="fas fa-calendar"></i> <%= job.posted %></span>
                         </div>
-                        <p class="job-description"><%= job.description %></p>
+                        <% if (job.description && job.description !== 'View posting for details' && job.description !== 'Job scraped from We Work Remotely. Click Apply to see full details.') { %>
+                            <p class="job-description"><%= job.description %></p>
+                        <% } %>
                         <div class="job-actions">
                             <a href="<%= job.url %>" target="_blank" class="btn btn-secondary">View Details</a>
                             <a href="<%= job.url %>" target="_blank" class="btn btn-primary">Apply Now</a>
@@ -91,7 +162,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 LMSJobs - The State of the Art Job Board for IT & Cybersecurity</p>
+            <p>&copy; 2026 MD Technical Job Board - The State of the Art Job Board for IT & Cybersecurity</p>
         </div>
     </footer>
 

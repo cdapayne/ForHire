@@ -8,7 +8,10 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    connectTimeout: 60000,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 });
 
 // Initialize the database table
@@ -27,6 +30,7 @@ const initDB = async () => {
                 description TEXT,
                 url TEXT,
                 source VARCHAR(100),
+                easy_apply BOOLEAN DEFAULT FALSE,
                 added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 expires_at TIMESTAMP NULL
             )

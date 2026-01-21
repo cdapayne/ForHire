@@ -90,12 +90,21 @@ function renderJobs(jobs) {
             imgHtml = `<div class="job-logo" style="display:flex;align-items:center;justify-content:center;background:#eee"><small>N/A</small></div>`;
         }
 
+        const jobUrl = job.url || job.link || '#';
+        const jobTitle = job.title || 'Unknown Job';
+        const jobCompany = job.company || 'Unknown Company';
+        const jobLocation = job.location || 'Unknown Location';
+        const jobSalary = job.salary || 'Not listed';
+        const isEasyApply = job.easyApply || false;
+
         div.innerHTML = `
             ${imgHtml}
             <div class="job-details">
-                <a href="${job.link}" target="_blank" class="job-title" title="${job.title}">${job.title}</a>
-                <div class="job-company">${job.company}</div>
-                <div class="job-location">${job.location}</div>
+                <a href="${jobUrl}" target="_blank" class="job-title" title="${jobTitle}">${jobTitle}</a>
+                <div class="job-company">${jobCompany}</div>
+                <div class="job-location">${jobLocation}</div>
+                ${jobSalary !== 'Not listed' ? `<div class="job-salary" style="color: #2c974b; font-weight: 600; font-size: 0.9rem;">💰 ${jobSalary}</div>` : ''}
+                ${isEasyApply ? `<div class="job-easy-apply" style="color: #00a859; font-weight: 600; font-size: 0.85rem;">⚡ Easy Apply</div>` : ''}
             </div>
         `;
         listContainer.appendChild(div);
