@@ -18,6 +18,146 @@ h1 {
     margin: 0;
 }
 
+.location-selector {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.selector-header {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #0d2538;
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.state-selector {
+    margin-top: 10px;
+}
+
+.state-search {
+    margin-bottom: 8px;
+}
+
+.state-search input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+}
+
+.state-checkboxes {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px;
+    background: #f9f9f9;
+}
+
+.state-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.state-checkbox:hover {
+    background: #eef;
+}
+
+.state-checkbox input[type="checkbox"] {
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.state-checkbox .city-count {
+    margin-left: auto;
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.state-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.btn-small {
+    flex: 1;
+    padding: 4px 8px;
+    border: 1px solid #0d2538;
+    background: white;
+    color: #0d2538;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.btn-small:hover {
+    background: #0d2538;
+    color: white;
+}
+
+.filter-options {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px;
+}
+
+.checkbox-option:hover {
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+
+.checkbox-option input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
 .controls {
     display: flex;
     gap: 10px;
@@ -59,6 +199,90 @@ h1 {
     font-size: 0.85rem;
     color: #666;
     height: 1.2em;
+}
+
+.stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #0d2538;
+}
+
+.progress-section {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.progress-percent {
+    font-weight: bold;
+    color: #0d2538;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0d2538 0%, #00ff88 100%);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.current-step {
+    font-size: 0.85rem;
+    color: #0d2538;
+    font-weight: 600;
+    text-align: center;
+}
+
+.error-msg {
+    background-color: #ffe6e6;
+    border: 1px solid #ff4444;
+    color: #cc0000;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    text-align: center;
 }
 
 .job-list {

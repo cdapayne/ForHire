@@ -1,0 +1,345 @@
+{
+  "alabama": [
+    { "name": "Birmingham, AL", "geoId": "103629395" },
+    { "name": "Montgomery, AL", "geoId": "103871370" },
+    { "name": "Mobile, AL", "geoId": "105172910" },
+    { "name": "Huntsville, AL", "geoId": "104180381" }
+  ],
+  "alaska": [
+    { "name": "Anchorage, AK", "geoId": "105379366" },
+    { "name": "Fairbanks, AK", "geoId": "106166763" },
+    { "name": "Juneau, AK", "geoId": "106054577" }
+  ],
+  "arizona": [
+    { "name": "Phoenix, AZ", "geoId": "103908924" },
+    { "name": "Tucson, AZ", "geoId": "104769007" },
+    { "name": "Mesa, AZ", "geoId": "103716698" },
+    { "name": "Chandler, AZ", "geoId": "105149562" },
+    { "name": "Scottsdale, AZ", "geoId": "105183772" },
+    { "name": "Tempe, AZ", "geoId": "104642512" }
+  ],
+  "arkansas": [
+    { "name": "Little Rock, AR", "geoId": "104098759" },
+    { "name": "Fort Smith, AR", "geoId": "105532432" },
+    { "name": "Fayetteville, AR", "geoId": "104816945" }
+  ],
+  "california": [
+    { "name": "Los Angeles, CA", "geoId": "90000049" },
+    { "name": "San Diego, CA", "geoId": "102865944" },
+    { "name": "San Jose, CA", "geoId": "106233382" },
+    { "name": "San Francisco, CA", "geoId": "102277331" },
+    { "name": "Fresno, CA", "geoId": "103465896" },
+    { "name": "Sacramento, CA", "geoId": "103368073" },
+    { "name": "Long Beach, CA", "geoId": "102448103" },
+    { "name": "Oakland, CA", "geoId": "102974008" },
+    { "name": "Bakersfield, CA", "geoId": "105313203" },
+    { "name": "Anaheim, CA", "geoId": "104018403" },
+    { "name": "Santa Ana, CA", "geoId": "102976156" },
+    { "name": "Riverside, CA", "geoId": "103015823" },
+    { "name": "Stockton, CA", "geoId": "103883248" },
+    { "name": "Irvine, CA", "geoId": "103483895" },
+    { "name": "Santa Clara, CA", "geoId": "102846945" },
+    { "name": "Fremont, CA", "geoId": "103819193" }
+  ],
+  "colorado": [
+    { "name": "Denver, CO", "geoId": "104787814" },
+    { "name": "Colorado Springs, CO", "geoId": "105506871" },
+    { "name": "Aurora, CO", "geoId": "104627295" },
+    { "name": "Fort Collins, CO", "geoId": "105353294" },
+    { "name": "Boulder, CO", "geoId": "104199234" }
+  ],
+  "connecticut": [
+    { "name": "Bridgeport, CT", "geoId": "105085856" },
+    { "name": "New Haven, CT", "geoId": "103515652" },
+    { "name": "Stamford, CT", "geoId": "104567023" },
+    { "name": "Hartford, CT", "geoId": "104178212" }
+  ],
+  "delaware": [
+    { "name": "Wilmington, DE", "geoId": "103859924" },
+    { "name": "Dover, DE", "geoId": "106371886" }
+  ],
+  "florida": [
+    { "name": "Jacksonville, FL", "geoId": "103883865" },
+    { "name": "Miami, FL", "geoId": "104452943" },
+    { "name": "Tampa, FL", "geoId": "103988659" },
+    { "name": "Orlando, FL", "geoId": "104436989" },
+    { "name": "St. Petersburg, FL", "geoId": "104394915" },
+    { "name": "Tallahassee, FL", "geoId": "104116395" },
+    { "name": "Fort Lauderdale, FL", "geoId": "103589008" },
+    { "name": "Cape Coral, FL", "geoId": "105319640" },
+    { "name": "Gainesville, FL", "geoId": "104806963" },
+    { "name": "Pensacola, FL", "geoId": "104508851" }
+  ],
+  "georgia": [
+    { "name": "Atlanta, GA", "geoId": "103879867" },
+    { "name": "Augusta, GA", "geoId": "104509268" },
+    { "name": "Columbus, GA", "geoId": "104839596" },
+    { "name": "Savannah, GA", "geoId": "103641971" },
+    { "name": "Athens, GA", "geoId": "105134973" }
+  ],
+  "hawaii": [
+    { "name": "Honolulu, HI", "geoId": "104850034" },
+    { "name": "Pearl City, HI", "geoId": "106424800" },
+    { "name": "Hilo, HI", "geoId": "106319733" },
+    { "name": "Kailua, HI", "geoId": "106367616" }
+  ],
+  "idaho": [
+    { "name": "Boise, ID", "geoId": "105777873" },
+    { "name": "Meridian, ID", "geoId": "106646388" },
+    { "name": "Nampa, ID", "geoId": "106502453" }
+  ],
+  "illinois": [
+    { "name": "Chicago, IL", "geoId": "103112676" },
+    { "name": "Aurora, IL", "geoId": "105072355" },
+    { "name": "Naperville, IL", "geoId": "104571343" },
+    { "name": "Joliet, IL", "geoId": "104654571" },
+    { "name": "Rockford, IL", "geoId": "103518850" },
+    { "name": "Springfield, IL", "geoId": "103738248" }
+  ],
+  "indiana": [
+    { "name": "Indianapolis, IN", "geoId": "104171268" },
+    { "name": "Fort Wayne, IN", "geoId": "104179119" },
+    { "name": "Evansville, IN", "geoId": "104566691" },
+    { "name": "South Bend, IN", "geoId": "103830818" }
+  ],
+  "iowa": [
+    { "name": "Des Moines, IA", "geoId": "104621512" },
+    { "name": "Cedar Rapids, IA", "geoId": "104637976" },
+    { "name": "Davenport, IA", "geoId": "105291943" }
+  ],
+  "kansas": [
+    { "name": "Wichita, KS", "geoId": "104439005" },
+    { "name": "Overland Park, KS", "geoId": "104818698" },
+    { "name": "Kansas City, KS", "geoId": "105079886" },
+    { "name": "Topeka, KS", "geoId": "104624904" }
+  ],
+  "kentucky": [
+    { "name": "Louisville, KY", "geoId": "104769895" },
+    { "name": "Lexington, KY", "geoId": "104122201" },
+    { "name": "Bowling Green, KY", "geoId": "105606844" }
+  ],
+  "louisiana": [
+    { "name": "New Orleans, LA", "geoId": "103544502" },
+    { "name": "Baton Rouge, LA", "geoId": "104654876" },
+    { "name": "Shreveport, LA", "geoId": "104507691" },
+    { "name": "Lafayette, LA", "geoId": "104841270" }
+  ],
+  "maine": [
+    { "name": "Portland, ME", "geoId": "102957005" },
+    { "name": "Lewiston, ME", "geoId": "106385867" },
+    { "name": "Bangor, ME", "geoId": "105877730" }
+  ],
+  "maryland": [
+    { "name": "Baltimore, MD", "geoId": "90000097" },
+    { "name": "Frederick, MD", "geoId": "104600205" },
+    { "name": "Rockville, MD", "geoId": "100249151" },
+    { "name": "Gaithersburg, MD", "geoId": "105229445" },
+    { "name": "Bethesda, MD", "geoId": "102994144" },
+    { "name": "Silver Spring, MD", "geoId": "106026178" }
+  ],
+  "massachusetts": [
+    { "name": "Boston, MA", "geoId": "90009714" },
+    { "name": "Worcester, MA", "geoId": "103486569" },
+    { "name": "Springfield, MA", "geoId": "103491815" },
+    { "name": "Cambridge, MA", "geoId": "104508288" },
+    { "name": "Lowell, MA", "geoId": "103946841" }
+  ],
+  "michigan": [
+    { "name": "Detroit, MI", "geoId": "102713980" },
+    { "name": "Grand Rapids, MI", "geoId": "103484513" },
+    { "name": "Warren, MI", "geoId": "104769318" },
+    { "name": "Sterling Heights, MI", "geoId": "105293308" },
+    { "name": "Ann Arbor, MI", "geoId": "103883823" },
+    { "name": "Lansing, MI", "geoId": "104616405" }
+  ],
+  "minnesota": [
+    { "name": "Minneapolis, MN", "geoId": "103494798" },
+    { "name": "St. Paul, MN", "geoId": "104629968" },
+    { "name": "Rochester, MN", "geoId": "105074801" },
+    { "name": "Duluth, MN", "geoId": "104795973" }
+  ],
+  "mississippi": [
+    { "name": "Jackson, MS", "geoId": "104571916" },
+    { "name": "Gulfport, MS", "geoId": "105629869" },
+    { "name": "Biloxi, MS", "geoId": "105715641" }
+  ],
+  "missouri": [
+    { "name": "Kansas City, MO", "geoId": "105079886" },
+    { "name": "St. Louis, MO", "geoId": "102912223" },
+    { "name": "Springfield, MO", "geoId": "104128677" },
+    { "name": "Columbia, MO", "geoId": "105298669" }
+  ],
+  "montana": [
+    { "name": "Billings, MT", "geoId": "105695341" },
+    { "name": "Missoula, MT", "geoId": "105939831" },
+    { "name": "Great Falls, MT", "geoId": "106472327" }
+  ],
+  "nebraska": [
+    { "name": "Omaha, NE", "geoId": "104640937" },
+    { "name": "Lincoln, NE", "geoId": "104117304" },
+    { "name": "Bellevue, NE", "geoId": "106190817" }
+  ],
+  "nevada": [
+    { "name": "Las Vegas, NV", "geoId": "104714416" },
+    { "name": "Henderson, NV", "geoId": "105377068" },
+    { "name": "Reno, NV", "geoId": "103558102" },
+    { "name": "North Las Vegas, NV", "geoId": "105921736" }
+  ],
+  "new_hampshire": [
+    { "name": "Manchester, NH", "geoId": "103861507" },
+    { "name": "Nashua, NH", "geoId": "104805453" },
+    { "name": "Concord, NH", "geoId": "105708318" }
+  ],
+  "new_jersey": [
+    { "name": "Newark, NJ", "geoId": "102890353" },
+    { "name": "Jersey City, NJ", "geoId": "103827142" },
+    { "name": "Paterson, NJ", "geoId": "103863994" },
+    { "name": "Elizabeth, NJ", "geoId": "104815084" },
+    { "name": "Trenton, NJ", "geoId": "103726305" }
+  ],
+  "new_mexico": [
+    { "name": "Albuquerque, NM", "geoId": "103815763" },
+    { "name": "Las Cruces, NM", "geoId": "105412088" },
+    { "name": "Santa Fe, NM", "geoId": "104797758" }
+  ],
+  "new_york": [
+    { "name": "New York, NY", "geoId": "105080838" },
+    { "name": "Buffalo, NY", "geoId": "104782943" },
+    { "name": "Rochester, NY", "geoId": "102890023" },
+    { "name": "Yonkers, NY", "geoId": "103944783" },
+    { "name": "Syracuse, NY", "geoId": "103126940" },
+    { "name": "Albany, NY", "geoId": "102861353" }
+  ],
+  "north_carolina": [
+    { "name": "Charlotte, NC", "geoId": "104508760" },
+    { "name": "Raleigh, NC", "geoId": "103709353" },
+    { "name": "Greensboro, NC", "geoId": "104116619" },
+    { "name": "Durham, NC", "geoId": "105290860" },
+    { "name": "Winston-Salem, NC", "geoId": "103558595" },
+    { "name": "Fayetteville, NC", "geoId": "104511848" },
+    { "name": "Cary, NC", "geoId": "105333191" },
+    { "name": "Asheville, NC", "geoId": "103877812" }
+  ],
+  "north_dakota": [
+    { "name": "Fargo, ND", "geoId": "104658813" },
+    { "name": "Bismarck, ND", "geoId": "105789868" },
+    { "name": "Grand Forks, ND", "geoId": "106187473" }
+  ],
+  "ohio": [
+    { "name": "Columbus, OH", "geoId": "102671715" },
+    { "name": "Cleveland, OH", "geoId": "104003075" },
+    { "name": "Cincinnati, OH", "geoId": "104512904" },
+    { "name": "Toledo, OH", "geoId": "103131027" },
+    { "name": "Akron, OH", "geoId": "103643127" },
+    { "name": "Dayton, OH", "geoId": "103725002" }
+  ],
+  "oklahoma": [
+    { "name": "Oklahoma City, OK", "geoId": "102571459" },
+    { "name": "Tulsa, OK", "geoId": "103750528" },
+    { "name": "Norman, OK", "geoId": "105429903" }
+  ],
+  "oregon": [
+    { "name": "Portland, OR", "geoId": "105082855" },
+    { "name": "Eugene, OR", "geoId": "104042795" },
+    { "name": "Salem, OR", "geoId": "103486734" },
+    { "name": "Gresham, OR", "geoId": "105434309" },
+    { "name": "Bend, OR", "geoId": "105396046" }
+  ],
+  "pennsylvania": [
+    { "name": "Philadelphia, PA", "geoId": "102299437" },
+    { "name": "Pittsburgh, PA", "geoId": "104003383" },
+    { "name": "Allentown, PA", "geoId": "103638179" },
+    { "name": "Erie, PA", "geoId": "103720437" },
+    { "name": "Reading, PA", "geoId": "103721046" }
+  ],
+  "rhode_island": [
+    { "name": "Providence, RI", "geoId": "103816761" },
+    { "name": "Warwick, RI", "geoId": "105307479" },
+    { "name": "Cranston, RI", "geoId": "105551663" }
+  ],
+  "south_carolina": [
+    { "name": "Columbia, SC", "geoId": "104018966" },
+    { "name": "Charleston, SC", "geoId": "104841063" },
+    { "name": "North Charleston, SC", "geoId": "105632827" },
+    { "name": "Greenville, SC", "geoId": "103875233" }
+  ],
+  "south_dakota": [
+    { "name": "Sioux Falls, SD", "geoId": "104649044" },
+    { "name": "Rapid City, SD", "geoId": "105678853" },
+    { "name": "Aberdeen, SD", "geoId": "106479399" }
+  ],
+  "tennessee": [
+    { "name": "Nashville, TN", "geoId": "102193696" },
+    { "name": "Memphis, TN", "geoId": "103585962" },
+    { "name": "Knoxville, TN", "geoId": "103919488" },
+    { "name": "Chattanooga, TN", "geoId": "104509049" },
+    { "name": "Clarksville, TN", "geoId": "105481253" }
+  ],
+  "texas": [
+    { "name": "Houston, TX", "geoId": "103873329" },
+    { "name": "San Antonio, TX", "geoId": "104693105" },
+    { "name": "Dallas, TX", "geoId": "90009763" },
+    { "name": "Austin, TX", "geoId": "104383552" },
+    { "name": "Fort Worth, TX", "geoId": "103969837" },
+    { "name": "El Paso, TX", "geoId": "102897472" },
+    { "name": "Arlington, TX", "geoId": "105146211" },
+    { "name": "Corpus Christi, TX", "geoId": "103988293" },
+    { "name": "Plano, TX", "geoId": "105196026" },
+    { "name": "Laredo, TX", "geoId": "104799893" },
+    { "name": "Lubbock, TX", "geoId": "103858269" },
+    { "name": "Irving, TX", "geoId": "105173343" }
+  ],
+  "utah": [
+    { "name": "Salt Lake City, UT", "geoId": "104131228" },
+    { "name": "West Valley City, UT", "geoId": "105758089" },
+    { "name": "Provo, UT", "geoId": "104758846" },
+    { "name": "West Jordan, UT", "geoId": "106111148" }
+  ],
+  "vermont": [
+    { "name": "Burlington, VT", "geoId": "104652313" },
+    { "name": "South Burlington, VT", "geoId": "106573018" },
+    { "name": "Rutland, VT", "geoId": "106667267" }
+  ],
+  "virginia": [
+    { "name": "Virginia Beach, VA", "geoId": "106468467" },
+    { "name": "Norfolk, VA", "geoId": "104167482" },
+    { "name": "Chesapeake, VA", "geoId": "106976053" },
+    { "name": "Richmond, VA", "geoId": "102114334" },
+    { "name": "Newport News, VA", "geoId": "100789246" },
+    { "name": "Alexandria, VA", "geoId": "104907323" },
+    { "name": "Hampton, VA", "geoId": "4361516088" },
+    { "name": "Roanoke, VA", "geoId": "102318275" },
+    { "name": "Portsmouth, VA", "geoId": "101094058" },
+    { "name": "Suffolk, VA", "geoId": "100520660" },
+    { "name": "Lynchburg, VA", "geoId": "105936994" },
+    { "name": "Arlington, VA", "geoId": "106413121" },
+    { "name": "Fredericksburg, VA", "geoId": "100599804" }
+  ],
+  "washington": [
+    { "name": "Seattle, WA", "geoId": "104116203" },
+    { "name": "Spokane, WA", "geoId": "103815668" },
+    { "name": "Tacoma, WA", "geoId": "104571732" },
+    { "name": "Vancouver, WA", "geoId": "104638883" },
+    { "name": "Bellevue, WA", "geoId": "105109674" },
+    { "name": "Kent, WA", "geoId": "105315099" }
+  ],
+  "washington_dc": [
+    { "name": "Washington, DC", "geoId": "90000097" }
+  ],
+  "west_virginia": [
+    { "name": "Charleston, WV", "geoId": "104502645" },
+    { "name": "Huntington, WV", "geoId": "104814666" },
+    { "name": "Morgantown, WV", "geoId": "105506580" }
+  ],
+  "wisconsin": [
+    { "name": "Milwaukee, WI", "geoId": "103447646" },
+    { "name": "Madison, WI", "geoId": "105214167" },
+    { "name": "Green Bay, WI", "geoId": "104626753" },
+    { "name": "Kenosha, WI", "geoId": "105299544" }
+  ],
+  "wyoming": [
+    { "name": "Cheyenne, WY", "geoId": "105827669" },
+    { "name": "Casper, WY", "geoId": "106364107" },
+    { "name": "Laramie, WY", "geoId": "106590098" }
+  ]
+}

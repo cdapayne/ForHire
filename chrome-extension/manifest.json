@@ -5,7 +5,12 @@
   "description": "Scrapes job listings from the current page content.",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.indeed.com/*"
   ],
   "action": {
     "default_popup": "popup.html"
@@ -14,6 +19,12 @@
     {
       "matches": ["*://*.linkedin.com/*", "*://*.indeed.com/*"],
       "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["config.json", "common-geoids.json"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

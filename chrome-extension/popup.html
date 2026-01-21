@@ -12,13 +12,81 @@
             <h1>LMSJobs Scraper</h1>
         </header>
         
+        <div class="location-selector">
+            <div class="selector-header">📍 Location Selection</div>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="locationMode" value="all" checked>
+                    <span>All States (250+ cities)</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="locationMode" value="select">
+                    <span>Select Specific States</span>
+                </label>
+            </div>
+            <div id="stateSelector" class="state-selector" style="display: none;">
+                <div class="state-search">
+                    <input type="text" id="stateSearch" placeholder="Search states...">
+                </div>
+                <div class="state-checkboxes" id="stateCheckboxes">
+                    <!-- States will be populated here -->
+                </div>
+                <div class="state-actions">
+                    <button id="selectAllStates" class="btn-small">Select All</button>
+                    <button id="clearAllStates" class="btn-small">Clear All</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-options">
+            <div class="selector-header">⚙️ Scraping Options</div>
+            <div class="checkbox-group">
+                <label class="checkbox-option">
+                    <input type="checkbox" id="remoteOnly">
+                    <span>Remote Jobs Only</span>
+                </label>
+                <label class="checkbox-option">
+                    <input type="checkbox" id="easyApplyOnly">
+                    <span>Easy Apply Only</span>
+                </label>
+                <label class="checkbox-option">
+                    <input type="checkbox" id="autoUpload">
+                    <span>Auto-Upload to Database</span>
+                </label>
+            </div>
+        </div>
+        
         <div class="controls">
-            <button id="scrapeBtn" class="btn btn-primary">Scrape Jobs</button>
+            <button id="startBtn" class="btn btn-primary">Start Scraping</button>
+            <button id="stopBtn" class="btn btn-secondary" style="display: none;">Stop</button>
             <button id="uploadBtn" class="btn btn-primary" style="background-color: #e67e22; display: none;">Upload DB</button>
             <button id="copyBtn" class="btn btn-secondary" style="display: none;">Copy</button>
         </div>
 
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Jobs Scraped:</span>
+                <span id="jobCount" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Current Location:</span>
+                <span id="currentLocation" class="stat-value">-</span>
+            </div>
+        </div>
+
+        <div class="progress-section" style="display: none;">
+            <div class="progress-info">
+                <span id="progressText">-</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="currentStep" class="current-step">-</div>
+        </div>
+
         <div id="status" class="status"></div>
+        <div id="errorMsg" class="error-msg" style="display: none;"></div>
 
         <div id="jobList" class="job-list">
             <!-- Jobs will appear here -->
